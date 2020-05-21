@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mall-user
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        register: true
+        health-check-interval: 10s
+        health-check-path: /actuator/health
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${random.int(10000)}
+      retry:
+        max-interval: 200
+
+  datasource:
+    type:  com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: com.mysql.cj.jdbc.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/cloud-mall?serverTimezone=UTC&characterEncoding=utf-8&useSSL=false     # 数据库名称
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+
+  redis:
+    host: 10.151.116.217
+    port: 6379
+    database: 15
+
+# swagger
+swagger:
+  base-package: 'com.yangyang.user.controller'
+  version: 1.0.0
+  license: 'yangyang'
+  base-path: "/**"
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.yangyang.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

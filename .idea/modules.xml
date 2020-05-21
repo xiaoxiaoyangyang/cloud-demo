@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cloud-demo.iml" filepath="$PROJECT_DIR$/cloud-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-file/mall-file.iml" filepath="$PROJECT_DIR$/mall-file/mall-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-gateway/mall-gateway.iml" filepath="$PROJECT_DIR$/mall-gateway/mall-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-log/mall-log.iml" filepath="$PROJECT_DIR$/mall-log/mall-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-log-start/mall-log-start.iml" filepath="$PROJECT_DIR$/mall-log-start/mall-log-start.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-model/mall-model.iml" filepath="$PROJECT_DIR$/mall-model/mall-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-oauth2/mall-oauth2.iml" filepath="$PROJECT_DIR$/mall-oauth2/mall-oauth2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall-user/mall-user.iml" filepath="$PROJECT_DIR$/mall-user/mall-user.iml" />
+    </modules>
+  </component>
+</project>

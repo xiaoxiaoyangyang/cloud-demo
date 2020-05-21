@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyang.user.mapper.SysPermissionMapper">
+    <resultMap id="SysPermissionBean" type="com.yangyang.model.SysPermission">
+        <id column="permission_id" property="permissionId"></id>
+        <result column="permission_name" property="permissionName"></result>
+        <result column="permission" property="permission"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <sql id="columnProperty">
+        t1.permission_id,t1.permission_name,t1.permission,t1.create_time,t1.update_time
+    </sql>
+
+    <select id="selectPermissions" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        left join mall_role_permission t2
+        on t1.permission_id = t2.permission_id
+        where t2.role_id in
+        <foreach collection="list" item="index" open="(" separator="," close=")">
+            #{index}
+        </foreach>
+    </select>
+
+
+    <select id="selectByRoleId" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        left join mall_role_permission t2
+        on t1.permission_id = t2.permission_id
+        where t2.role_id = #{roleId}
+    </select>
+
+    <delete id="deleteBatch">
+        delete from mall_permission
+        where permission_id in
+        <foreach collection="list" open="(" separator="," close=")" item="index">
+            #{index}
+        </foreach>
+    </delete>
+
+    <select id="findByRoleId" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        left join mall_role_permission t2
+        on t1.permission_id = t2.permission_id
+        where t2.role_id = #{roleId}
+    </select>
+
+    <select id="findByPermission" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        where t1.permission_name = #{permissionName}
+    </select>
+
+    <insert id="save">
+        insert into mall_permission (permission_name,permission,create_time,update_time)
+        values (#{permissionName},#{permission},#{createTime},#{updateTime})
+    </insert>
+
+    <sql id="where">
+        <where>
+            <if test="sysPermissionRequest.permissionName != null and sysPermissionRequest.permissionName != ''">
+                and t1.permission_name = #{sysPermissionRequest.permissionName}
+            </if>
+            <if test="sysPermissionRequest.permission != null and sysPermissionRequest.permission !=''">
+                and t1.permission = #{sysPermissionRequest.permission}
+            </if>
+        </where>
+    </sql>
+
+    <update id="update">
+        update mall_permission t1
+        <set>
+            <if test="permissionName != null and permissionName != ''">
+                t1.permission_name = #{permissionName},
+            </if>
+            <if test="updateTime != null">
+                t1.update_time = #{updateTime}
+            </if>
+        </set>
+        where t1.permission_id = #{permissionId}
+    </update>
+    
+    <select id="findByPermissionId" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        where t1.permission_id = #{permissionId}
+    </select>
+
+    <select id="count" resultType="integer">
+        select count(*) from mall_permission t1
+        <include refid="where"></include>;
+    </select>
+
+    <select id="query" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        <include refid="where"></include>
+        limit #{start},#{size}
+    </select>
+
+    <select id="selectDetails" resultMap="SysPermissionBean">
+        select <include refid="columnProperty"></include>
+        from mall_permission t1
+        where t1.permission_id = #{permissionId}
+    </select>
+</mapper>

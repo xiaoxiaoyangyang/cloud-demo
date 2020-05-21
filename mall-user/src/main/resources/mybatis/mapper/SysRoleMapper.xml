@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyang.user.mapper.SysRoleMapper">
+    <resultMap id="SysRoleBean" type="com.yangyang.model.SysRole">
+        <id column="role_id" property="roleId"></id>
+        <result column="role_name" property="roleName"></result>
+        <result column="code" property="code"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <sql id="columnProperty">
+        t1.role_id,t1.role_name,t1.code,t1.create_time,t1.update_time
+    </sql>
+
+    <select id="selectByRoleId" resultMap="SysRoleBean">
+        select <include refid="columnProperty"></include>
+        from mall_role t1
+        left join mall_role_user t2
+        on t1.role_id = t2.role_id
+        where t2.user_id = #{userId}
+    </select>
+
+    <select id="findByRoleCode" resultMap="SysRoleBean">
+        select <include refid="columnProperty"></include>
+        from mall_role t1
+        where t1.role_name = #{roleName}
+    </select>
+
+    <insert id="save">
+        insert into mall_role (role_name,code,create_time,update_time)
+        values (#{roleName},#{code},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findByRoleId" resultMap="SysRoleBean">
+        select <include refid="columnProperty"></include>
+        from mall_role t1
+        where t1.role_id = #{roleId}
+    </select>
+
+    <delete id="delete" >
+        delete from mall_role
+        where role_id = #{roleId}
+    </delete>
+
+    <update id="update">
+        update mall_role t1
+        <set>
+            <if test="roleName != null and roleName !=''">
+                t1.role_name = #{roleName},
+            </if>
+            <if test="code != null and code != ''">
+                t1.code = #{code},
+            </if>
+            <if test="updateTime != null">
+                t1.update_time = #{updateTime}
+            </if>
+        </set>
+        where t1.role_id = #{roleId}
+    </update>
+
+
+    <select id="queryRole" resultMap="SysRoleBean">
+        select <include refid="columnProperty"></include>
+        from mall_role t1
+        where t1.role_id = #{roleId};
+    </select>
+
+    <sql id="where">
+        <where>
+            <if test="sysRoleRequest.roleName != null and sysRoleRequest.roleName != ''">
+                and t1.role_name = #{sysRoleRequest.roleName}
+            </if>
+            <if test="sysRoleRequest.code != null and sysRoleRequest.code != ''">
+                and t1.code = #{sysRoleRequest.code}
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" resultType="integer">
+        select count(*) from mall_role t1
+       <include refid="where"></include>
+    </select>
+
+    <select id="selectByParams" resultMap="SysRoleBean">
+        select <include refid="columnProperty"></include>
+        from mall_role t1
+        <include refid="where"></include>
+    </select>
+</mapper>

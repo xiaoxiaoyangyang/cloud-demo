@@ -1,0 +1,4 @@
+# Auto Configure
+# com.yangyang.autoconfigure.LogAutoConfiguration,\
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.yangyang.autoconfigure.LogAop

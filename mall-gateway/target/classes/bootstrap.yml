@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: mall-gateway
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${random.int(10000)}
+      retry:
+        max-interval: 200
+
+    gateway:
+      enabled: true
+      routes:
+        - id : mall-user
+          uri: lb://mall-user
+          predicates:
+            - Path=/mall-user/**
+          filters:
+            - StripPrefix=1
+
+  redis:
+    host: 10.151.116.217
+    port: 6379
+    database: 15

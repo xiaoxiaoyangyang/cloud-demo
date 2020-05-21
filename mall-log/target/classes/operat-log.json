@@ -1,0 +1,40 @@
+{
+  "opreatelog": {
+    "properties": {
+      "userId": {
+        "type": "keyword"
+      },
+      "username": {
+        "type": "text"
+      },
+      "orgId": {
+        "type": "long"
+      },
+      "orgName": {
+        "type": "keyword"
+      },
+      "operateTime": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+      },
+      "moduleId": {
+        "type": "long"
+      },
+      "moduleName": {
+        "type": "keyword"
+      },
+      "operateType": {
+        "type": "keyword"
+      },
+      "operateFunction": {
+        "type": "keyword"
+      },
+      "details":{
+        "type":"keyword"
+      },
+      "realname":{
+        "type":"text"
+      }
+    }
+  }
+}

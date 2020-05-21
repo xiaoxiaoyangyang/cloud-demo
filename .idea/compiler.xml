@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mall-log" />
+        <module name="mall-file" />
+        <module name="mall-gateway" />
+        <module name="mall-oauth2" />
+        <module name="mall-model" />
+        <module name="mall-user" />
+        <module name="mall-log-start" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cloud-demo" target="1.8" />
+      <module name="mall-file" target="1.8" />
+      <module name="mall-gateway" target="1.8" />
+      <module name="mall-log" target="1.8" />
+      <module name="mall-log-start" target="1.8" />
+      <module name="mall-model" target="1.8" />
+      <module name="mall-oauth2" target="1.8" />
+      <module name="mall-user" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cloud-demo" options="" />
+      <module name="mall-file" options="-parameters" />
+      <module name="mall-gateway" options="-parameters" />
+      <module name="mall-log" options="-parameters" />
+      <module name="mall-log-start" options="-parameters" />
+      <module name="mall-model" options="-parameters" />
+      <module name="mall-oauth2" options="-parameters" />
+      <module name="mall-user" options="-parameters" />
+    </option>
+  </component>
+</project>

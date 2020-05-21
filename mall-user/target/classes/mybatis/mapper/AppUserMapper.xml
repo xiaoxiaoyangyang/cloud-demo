@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyang.user.mapper.AppUserMapper">
+    <resultMap id="AppUser" type="com.yangyang.model.AppUser">
+        <id column="user_id" property="userId"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="nickname" property="nickname"></result>
+        <result column="head_image_url" property="headImageUrl"></result>
+        <result column="phone" property="phone"></result>
+        <result column="enable" property="enable"></result>
+        <result column="sex" property="sex"></result>
+        <result column="type" property="type"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+
+    <sql id="columnProperty">
+        user_id,username,password,nickname,head_image_url,phone,enable,sex,type,create_time,update_time
+    </sql>
+
+    <select id="selectByUsername" resultMap="AppUser">
+        select <include refid="columnProperty"></include>
+        from mall_user
+        where username = #{username}
+    </select>
+
+    <insert id="save">
+        insert into mall_user (username,password,nickname,head_image_url,phone,enable,sex,type,create_time,update_time)
+        values (#{username},#{password},#{nickname},#{headImageUrl},#{phone},#{enable},#{sex},#{type},#{createTime},#{updateTime})
+    </insert>
+    
+    <sql id="where">
+        <where>
+            <if test="userRequest.username != null and userRequest.username != ''">
+                and t.username = #{userRequest.username}
+            </if>
+            <if test="userRequest.nickname != null and userRequest.nickname != ''">
+               and t.nickname = #{userRequest.nickname}
+            </if>
+            <if test="userRequest.enable != null">
+                and t.enable = #{userRequest.enable}
+            </if>
+            <if test="userRequest.sex != null">
+                and t.sex = #{userRequest.sex}
+            </if>
+            <if test="userRequest.type != null">
+                and t.type = #{userRequest.type}
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" resultType="integer">
+        select count(*)
+        from mall_user t <include refid="where"></include>
+    </select>
+
+    <select id="selectByParams" resultMap="AppUser">
+        select <include refid="columnProperty"></include>
+        from mall_user t
+        <include refid="where"></include>
+        <if test="start != null and start >= 0 and size != null and size >0">
+            limit #{start} ,#{size}
+        </if>
+    </select>
+
+    <select id="selectOneByUserId" resultMap="AppUser">
+        select <include refid="columnProperty"></include>
+        from mall_user
+        where user_id = #{userId}
+    </select>
+
+
+    <update id="updateAppUser" >
+        update mall_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="headImageUrl != null and headImageUrl != ''">
+                head_image_url = #{headImageUrl},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="enable != null">
+                enable = #{enable},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+
+</mapper>

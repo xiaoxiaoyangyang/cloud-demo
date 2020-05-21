@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyang.log.mapper.LogMapper">
+    <resultMap id="LogBean" type="com.yangyang.model.Log">
+        <id column="log_id" property="logId"></id>
+        <result column="username" property="username"></result>
+        <result column="module" property="module"></result>
+        <result column="params" property="params"></result>
+        <result column="remark" property="remark"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <sql id="columnProperty">
+        t.log_id,t.username,t.module,t.params,t.remark,t.create_time
+    </sql>
+
+    <insert id="save">
+        insert into mall_logs (username,module,params,remark,create_time)
+        values (#{username},#{module},#{params},#{remark},#{createTime})
+    </insert>
+
+    <sql id="where">
+        <where>
+            <if test="username != null and username != ''">
+                and t.username = #{username}
+            </if>
+
+            <if test="module != null and module != ''">
+                and t.module = #{module}
+            </if>
+
+            <if test="createTime != null">
+                and t.create_time = #{createTime}
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="count" resultType="integer">
+        select <include refid="columnProperty"></include>
+        from mall_logs t
+        <include refid="where"></include>
+    </select>
+
+    <select id="queryList" resultMap="LogBean">
+        select <include refid="columnProperty"></include>
+        from mall_logs t
+        <include refid="where"></include>
+        order by t.log_id desc
+        <if test="start != null and start > = 0 and size != null and size >= 0">
+            limit #{start},#{size}
+        </if>
+    </select>
+</mapper>

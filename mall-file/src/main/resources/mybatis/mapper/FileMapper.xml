@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyang.mall.file.mapper.FileMapper">
+    <resultMap id="fileInfoBean" type="com.yangyang.model.FileInfo">
+        <id column="file_id" property="fileId"></id>
+        <result column="file_name" property="fileName"></result>
+        <result column="content_type" property="contentType"></result>
+        <result column="is_image" property="isImage"></result>
+        <result column="size" property="size"></result>
+        <result column="path" property="path"></result>
+        <result column="url" property="url"></result>
+        <result column="channel" property="channel"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <sql id="columnProperty">
+        t.file_id ,t.file_name ,t.content_type ,t.is_image ,t.size ,t.path ,t.url ,t.channel , t.create_time
+    </sql>
+    
+    <sql id="where">
+        <where>
+            <if test="fileRequest.channel != null">
+                and t.channel = #{channel}
+            </if>
+            <if test="fileRequest.fileId != null and fileRequest.fileId != ''">
+                and t.file_id = #{fileId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectById" resultMap="fileInfoBean">
+        select <include refid="columnProperty"></include>
+        from mall_file t
+        <where>
+            t.file_id = #{fileId}
+        </where>
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count (*)
+        from mall_file t
+        <include refid="where"></include>
+    </select>
+
+    <select id="selectFileList" resultMap="fileInfoBean">
+        select <include refid="columnProperty"></include>
+        from mall_file t
+        <include refid="where"></include>
+        <if test="start != null and start >= 0 and size != null and size >0">
+            limit #{start} ,#{size}
+        </if>
+    </select>
+
+    <insert id="save">
+        insert into mall_file (file_id,file_name,content_type,is_image,size,path,url,channel,create_time)
+        values (#{fileId},#{fileName},#{contentType},#{isImage},#{size},#{path},#{url},#{channel},#{createTime})
+    </insert>
+
+    <delete id="delete">
+        delete from mall_file
+        where file_id = #{fileId}
+    </delete>
+</mapper>
