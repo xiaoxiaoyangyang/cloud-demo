@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <spring.boot.admin.version>2.2.1</spring.boot.admin.version>
         <mybatis.plus.version>3.1.1</mybatis.plus.version>
         <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
